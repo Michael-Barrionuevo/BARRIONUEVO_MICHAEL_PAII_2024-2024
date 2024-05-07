@@ -2,8 +2,6 @@ package Galaga;
 
 import javax.swing.JFrame;
 
-
-
 public class Main extends JFrame {
 
     public Main() {
@@ -13,15 +11,13 @@ public class Main extends JFrame {
         setLocation(270, 100);
         setSize(800, 600);
 
-        Panel my = new Panel();
-        add(my);
+        Panel myPanel = new Panel();
+        add(myPanel);
 
         setVisible(true);
     }
 
     public static void main(String[] args) {
-        Main panel = new Main();
+        Main main = new Main();
     }
 }
-
-

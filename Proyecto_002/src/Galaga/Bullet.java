@@ -11,12 +11,13 @@ public class Bullet implements Drawable, Movable {
     private int x, y; 
     private int width;
     private int height;
+    private boolean active;
 
     public Bullet(int x, int y) {
         this.x = x;
         this.y = y;
-        this.width = 7; // Ancho de la bala
-        this.height = 13; // Alto de la bala
+        this.width = 7;
+        this.height = 13;
     }
 
     @Override
@@ -33,10 +34,18 @@ public class Bullet implements Drawable, Movable {
             y = 0 - 15;
         }
     }
-
+    
     @Override
     public void moveVertical() {
-        // Método no utilizado en esta clase
+        // No se utiliza en esta clase
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public int getY() {
@@ -46,4 +55,9 @@ public class Bullet implements Drawable, Movable {
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, height);
     }
+
+	public int getX() {
+		
+		return x;
+	}
 }
