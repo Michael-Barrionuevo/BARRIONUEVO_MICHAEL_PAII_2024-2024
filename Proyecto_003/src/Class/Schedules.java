@@ -9,18 +9,18 @@ import Interfaz.IDAOSchedules;
 public class Schedules implements IDAOSchedules{
 	
 	private int id_subject;
-	private int id_alumn;
-	private int id_professor;
+	private int id_student;
+	private int id_teacher;
 	private String start_time;
 	private String end_time;
 	private String day;
 	private String table = "Schedule";
-	private PreparedStatement ps;
+	private PreparedStatement pre;
 
-	public Schedules(int id_mat, int id_alumno, int id_profesor, String start_time, String end_time, String day) {
+	public Schedules(int id_mat, int id_student, int id_teacher, String start_time, String end_time, String day) {
 		this.id_subject = id_mat;
-		this.id_alumn = id_alumno;
-		this.id_professor = id_profesor;
+		this.id_student = id_student;
+		this.id_teacher = id_teacher;
 		this.start_time = start_time;
 		this.end_time = end_time;
 		this.day = day;
@@ -28,15 +28,15 @@ public class Schedules implements IDAOSchedules{
 
 	@Override
 	public void create(Connection connection, Schedules schedule) throws SQLException {
-		ps = connection.prepareStatement("INSERT INTO Schedule (id_alumn, id_professor, id_subject, start_time,end_time, day) VALUES (?,?,?,?,?,?)");
-		ps.setInt(3, schedule.getId_subject());
-		ps.setInt(1, schedule.getId_alumn());
-		ps.setInt(2, schedule.getId_professor());
-		ps.setString(4, schedule.getStart_time());
-		ps.setString(5, schedule.getEnd_time());
-		ps.setString(6, schedule.getDay());
-		ps.execute();
-		ps.close();
+		pre = connection.prepareStatement("INSERT INTO Schedule (id_student, id_tacher, id_subject, start_time,end_time, day) VALUES (?,?,?,?,?,?)");
+		pre.setInt(3, schedule.getId_subject());
+		pre.setInt(1, schedule.getId_student());
+		pre.setInt(2, schedule.getId_teacher());
+		pre.setString(4, schedule.getStart_time());
+		pre.setString(5, schedule.getEnd_time());
+		pre.setString(6, schedule.getDay());
+		pre.execute();
+		pre.close();
 		
 	}
 
@@ -60,10 +60,10 @@ public class Schedules implements IDAOSchedules{
 
 	@Override
 	public void createTable(Connection connection) throws SQLException {
-		String query = "CREATE TABLE IF NOT EXISTS Schedule ( " + "id_alumn INT," + "id_professor INT,"
+		String query = "CREATE TABLE IF NOT EXISTS Schedule ( " + "id_student INT," + "id_teacher INT,"
 				+ "id_subject INT," + "start_time VARCHAR(30)," + "end_time VARCHAR(30)," + "day VARCHAR(30),"
-				+ "FOREIGN KEY (id_alumn) REFERENCES Alumns(id_alumn),"
-				+ "FOREIGN KEY (id_professor) REFERENCES Professors(id),"
+				+ "FOREIGN KEY (id_student) REFERENCES Alumns(id_teacher),"
+				+ "FOREIGN KEY (id_teacher) REFERENCES Teacher(id),"
 				+ "FOREIGN KEY (id_subject) REFERENCES Subject(id)" + ")";
 		connection.createStatement().executeUpdate(query);
 		System.out.println("Tabla creada o ya existente.");
@@ -78,20 +78,20 @@ public class Schedules implements IDAOSchedules{
 		this.id_subject = id_subject;
 	}
 
-	public int getId_alumn() {
-		return id_alumn;
+	public int getId_student() {
+		return id_student;
 	}
 
-	public void setId_alumn(int id_alumn) {
-		this.id_alumn = id_alumn;
+	public void setId_student(int id_student) {
+		this.id_student = id_student;
 	}
 
-	public int getId_professor() {
-		return id_professor;
+	public int getId_teacher() {
+		return id_teacher;
 	}
 
-	public void setId_professor(int id_professor) {
-		this.id_professor = id_professor;
+	public void setId_teacher(int id_teacher) {
+		this.id_teacher = id_teacher;
 	}
 
 	public String getStart_time() {

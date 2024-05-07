@@ -9,7 +9,7 @@ import Interfaz.IDAOPerson;
 
 public class Teacher extends Person implements IDAOPerson{
 
-	private PreparedStatement ps;
+	private PreparedStatement pre;
 	private String table = "Professors";
 
 	public Teacher(int id, String name, String lastName, int age) {
@@ -19,13 +19,13 @@ public class Teacher extends Person implements IDAOPerson{
 
 	@Override
 	public void create(Connection connection, Person person) throws SQLException {
-		ps = connection.prepareStatement("INSERT INTO " + table + " (id, name, lastname, age) VALUES (?,?,?,?)");
-		ps.setInt(1, person.getId());
-		ps.setString(2, person.getName());
-		ps.setString(3, person.getLastName());
-		ps.setInt(4, person.getAge());
-		ps.execute();
-		ps.close();
+		pre = connection.prepareStatement("INSERT INTO " + table + " (id, name, lastname, age) VALUES (?,?,?,?)");
+		pre.setInt(1, person.getId());
+		pre.setString(2, person.getName());
+		pre.setString(3, person.getLastName());
+		pre.setInt(4, person.getAge());
+		pre.execute();
+		pre.close();
 
 	}
 
@@ -35,11 +35,11 @@ public class Teacher extends Person implements IDAOPerson{
 		String sql = null;
 		person = new Person(0, "", "", 0);
 
-		ps = connection.prepareStatement("SELECT * FROM \" + table + \" WHERE id = ?");
+		pre = connection.prepareStatement("SELECT * FROM \" + table + \" WHERE id = ?");
 //			sql = "SELECT * FROM " + table + " WHERE id = ?";
 //			ps = connection.prepareStatement(sql);
-		ps.setInt(1, id_person);
-		resultados = ps.executeQuery();
+		pre.setInt(1, id_person);
+		resultados = pre.executeQuery();
 
 		if (resultados.next()) {
 			person.setId(resultados.getInt(1));
@@ -49,29 +49,29 @@ public class Teacher extends Person implements IDAOPerson{
 
 			System.out.println(person.toString());
 		}
-		ps.close();
-		ps.close();
+		pre.close();
+		pre.close();
 		return person;
 	}
 
 	@Override
 	public void update(Connection connection, Person person, int id_person) throws SQLException {
-		ps = connection.prepareStatement("UPDATE " + table + " SET name=?, lastname=?, age=? WHERE id=?");
-		ps.setString(1, person.getName());
-		ps.setString(2, person.getLastName());
-		ps.setInt(3, person.getAge());
-		ps.setInt(4, id_person);
-		ps.execute();
-		ps.close();
+		pre = connection.prepareStatement("UPDATE " + table + " SET name=?, lastname=?, age=? WHERE id=?");
+		pre.setString(1, person.getName());
+		pre.setString(2, person.getLastName());
+		pre.setInt(3, person.getAge());
+		pre.setInt(4, id_person);
+		pre.execute();
+		pre.close();
 
 	}
 
 	@Override
 	public void delete(Connection connection, int id_person) throws SQLException {
-		ps = connection.prepareStatement("DELETE FROM " + table + " WHERE id=?");
-		ps.setInt(1, id_person);
-		ps.execute();
-		ps.close();
+		pre = connection.prepareStatement("DELETE FROM " + table + " WHERE id=?");
+		pre.setInt(1, id_person);
+		pre.execute();
+		pre.close();
 
 	}
 

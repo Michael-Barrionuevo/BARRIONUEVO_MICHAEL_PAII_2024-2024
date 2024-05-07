@@ -14,7 +14,7 @@ public class Subjects implements IDAOSubjects {
 	private String description;
 	private int level;
 	
-	private PreparedStatement ps;
+	private PreparedStatement pre;
 	private String table = "Subject";
 	
 	public Subjects(int id, String name, String description, int level) {
@@ -26,13 +26,13 @@ public class Subjects implements IDAOSubjects {
 	
 	@Override
 	public void create(Connection connection, Subjects subject) throws SQLException {
-		ps = connection.prepareStatement("INSERT INTO " + table + " (id, name, description, level) VALUES (?,?,?,?)");
-		ps.setInt(1, subject.getId());
-		ps.setString(2, subject.getName());
-		ps.setString(3, subject.getDescription());
-		ps.setInt(4, subject.getLevel());
-		ps.execute();
-		ps.close();
+		pre = connection.prepareStatement("INSERT INTO " + table + " (id, name, description, level) VALUES (?,?,?,?)");
+		pre.setInt(1, subject.getId());
+		pre.setString(2, subject.getName());
+		pre.setString(3, subject.getDescription());
+		pre.setInt(4, subject.getLevel());
+		pre.execute();
+		pre.close();
 		
 	}
 
@@ -42,9 +42,9 @@ public class Subjects implements IDAOSubjects {
 		String sql = null;
 		subject = new Subjects(0, "", "", 0);
 
-		ps = connection.prepareStatement("SELECT * FROM \" + table + \" WHERE id = ?");
-		ps.setInt(1, id_subject);
-		resultados = ps.executeQuery();
+		pre = connection.prepareStatement("SELECT * FROM \" + table + \" WHERE id = ?");
+		pre.setInt(1, id_subject);
+		resultados = pre.executeQuery();
 
 		if (resultados.next()) {
 			subject.setId(resultados.getInt(1));
@@ -54,30 +54,30 @@ public class Subjects implements IDAOSubjects {
 
 			System.out.println(subject.toString());
 		}
-		ps.close();
-		ps.close();
+		pre.close();
+		pre.close();
 		return subject;
 	}
 
 	@Override
 	public void update(Connection connection, Subjects subject, int id_subject) throws SQLException {
-		ps = connection.prepareStatement("UPDATE " + table + " SET name=?, lastname=?, age=? WHERE id=?");
-		ps.setString(1, subject.getName());
-		ps.setString(2, subject.getDescription());
-		ps.setInt(3, subject.getLevel());
-		ps.setInt(4, id_subject);
-		ps.execute();
-		ps.close();
+		pre = connection.prepareStatement("UPDATE " + table + " SET name=?, lastname=?, age=? WHERE id=?");
+		pre.setString(1, subject.getName());
+		pre.setString(2, subject.getDescription());
+		pre.setInt(3, subject.getLevel());
+		pre.setInt(4, id_subject);
+		pre.execute();
+		pre.close();
 
 		
 	}
 
 	@Override
 	public void delete(Connection connection, int id_subject) throws SQLException {
-		ps = connection.prepareStatement("DELETE FROM " + table + " WHERE id=?");
-		ps.setInt(1, id_subject);
-		ps.execute();
-		ps.close();
+		pre = connection.prepareStatement("DELETE FROM " + table + " WHERE id=?");
+		pre.setInt(1, id_subject);
+		pre.execute();
+		pre.close();
 		
 	}
 
